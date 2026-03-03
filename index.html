@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0f3460">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -12,16 +12,17 @@
 
 <style>
 
-/* App Background (Phone Frame Effect) */
+/* App Background */
 body{
     margin:0;
     padding:0;
     min-height:100vh;
     display:flex;
     justify-content:center;
-    align-items:center;
+    align-items:flex-start;
     background:#000;
     font-family:'Poppins',sans-serif;
+    overflow-x:hidden;
 }
 
 /* Mobile App Screen */
@@ -37,6 +38,7 @@ body{
     overflow:hidden;
     border-radius:30px;
     box-shadow:0 0 40px rgba(0,0,0,0.8);
+    box-sizing:border-box;
 }
 
 /* Stars */
@@ -56,6 +58,7 @@ h1{
     font-size:2rem;
     animation:glow 2s infinite alternate;
     margin-bottom:10px;
+    word-break:break-word;
 }
 @keyframes glow{from{text-shadow:0 0 8px #ff4e50;}to{text-shadow:0 0 25px #ffcc00;}}
 
@@ -68,6 +71,7 @@ h1{
     animation:typing 25s steps(350,end) forwards,blink 1s infinite;
     font-size:0.95rem;
     margin:0 auto;
+    word-break:break-word;
 }
 @keyframes typing{to{width:100%;}}
 @keyframes blink{50%{border-color:transparent;}}
@@ -123,8 +127,18 @@ button:hover{transform:scale(1.05);background:#ffcc00;color:black;}
     text-align:center;
     animation:pop 0.5s ease;
     max-width:90%;
+    word-break:break-word;
 }
 @keyframes pop{from{transform:scale(0);}to{transform:scale(1);}}
+
+/* Responsive */
+@media (max-width:420px){
+    h1{font-size:1.6rem;}
+    .typing{font-size:0.9rem;}
+    .balloon{width:30px;height:45px;}
+    .heart{font-size:14px;}
+    button{padding:7px 12px;font-size:0.85rem;}
+}
 
 </style>
 </head>
@@ -174,33 +188,35 @@ From the moment you came into my life, everything changed. Your smile lights up 
 function showSurprise(){document.getElementById("modal").style.display="flex";}
 function closeModal(){document.getElementById("modal").style.display="none";}
 
+// Stars
 for(let i=0;i<120;i++){
-let star=document.createElement("div");
-star.className="star";
-star.style.top=Math.random()*100+"vh";
-star.style.left=Math.random()*100+"vw";
-document.body.appendChild(star);
+    let star=document.createElement("div");
+    star.className="star";
+    star.style.top=Math.random()*100+"vh";
+    star.style.left=Math.random()*100+"vw";
+    document.body.appendChild(star);
 }
 
+// Floating Hearts
 setInterval(()=>{
-let h=document.createElement("div");
-h.className="heart";
-h.innerHTML="❤️";
-h.style.left=Math.random()*100+"vw";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),6000);
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
 },400);
 
+// Play music
 const music=document.getElementById("bgMusic");
 const tap=document.getElementById("tapSound");
 const playBtn=document.getElementById("playMusicBtn");
 music.volume=0.6;
-
 playBtn.addEventListener("click",()=>{
-tap.currentTime=0;
-tap.play().catch(()=>{});
-setTimeout(()=>{music.play().catch(()=>{});},400);
-playBtn.style.display="none";
+    tap.currentTime=0;
+    tap.play().catch(()=>{});
+    setTimeout(()=>{music.play().catch(()=>{});},400);
+    playBtn.style.display="none";
 });
 </script>
 
